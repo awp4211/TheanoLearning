@@ -1,3 +1,6 @@
+#-*-coding:utf-8 -*-
+
+
 from __future__ import print_function
 from six.moves import xrange
 import six.moves.cPickle as pickle
@@ -78,7 +81,11 @@ def get_dataset_file(dataset, default_dataset, origin):
         
     return dataset
 
-
+"""
+加载IMDB数据，返回trianing set，validation set和test set,
+每个集合是中包含句子和对应的标签，句子的格式为list[词索引1,词索引2,.....,词索引n]
+词索引表示句子中的词在当前词典库中的索引，
+"""
 def load_data(path="imdb.pkl", n_words=100000, valid_portion=0.1, maxlen=None,
               sort_by_len=True):
     '''Loads the dataset
@@ -152,6 +159,7 @@ def load_data(path="imdb.pkl", n_words=100000, valid_portion=0.1, maxlen=None,
     valid_set_x = remove_unk(valid_set_x)
     test_set_x = remove_unk(test_set_x)
 
+    # 按照句子长度从短到长排序
     def len_argsort(seq):
         return sorted(range(len(seq)), key=lambda x: len(seq[x]))
 
@@ -181,6 +189,6 @@ if __name__ == "__main__":
     print(len(train))
     print(len(train[0]))
     # training set中第一个句子的长度
-    print(len(train[0][1]))
+    print(len(train[0][-1]))
     # train[0][1]是第一个句子的内容，表示为一个list，其中的内容为词的索引
-    print(train[0][1])
+    print(train[0][-1])
